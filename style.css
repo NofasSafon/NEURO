@@ -1,0 +1,183 @@
+﻿:root {
+    --ocean-deep: #0a192f;
+    --neon-blue: #00d4ff;
+    --neon-orange: #ff9d00;
+    --pearl-white: #e0f7fa;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+}
+
+body.neuro-ocean {
+    background: radial-gradient(circle at center, #112240 0%, #0a192f 100%);
+    color: white;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+header {
+    background: rgba(10, 25, 47, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--neon-blue);
+    padding: 15px 0;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.logo span { color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
+
+.mission-control {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+/* Рама Абакуса - Нейро-Човен */
+.abacus-system {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.abacus-frame {
+    background: var(--glass-bg);
+    padding: 30px;
+    border-radius: 20px;
+    border: 3px solid var(--neon-blue);
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
+    position: relative;
+}
+
+.abacus {
+    display: flex;
+    gap: 25px;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 50px;
+}
+
+/* Лазерний шлях (спиця) */
+.column::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 4px;
+    background: linear-gradient(to bottom, transparent, var(--neon-blue), transparent);
+    z-index: 0;
+}
+
+/* Роздільна перекладина */
+.column::after {
+    content: "";
+    position: absolute;
+    top: 75px;
+    width: 70px;
+    height: 6px;
+    background: var(--neon-blue);
+    box-shadow: 0 0 15px var(--neon-blue);
+    z-index: 1;
+}
+
+/* Кісточки-Перлини */
+.bead {
+    width: 45px;
+    height: 30px;
+    background: radial-gradient(circle at 30% 30%, var(--pearl-white), #b2ebf2);
+    border-radius: 40% 40% 45% 45%;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 2;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.5);
+}
+
+.bead.active {
+    background: radial-gradient(circle at 30% 30%, #fff, var(--neon-orange));
+    box-shadow: 0 0 20px var(--neon-orange);
+}
+
+/* Позиціонування */
+.upper .bead { transform: translateY(-15px); }
+.upper .bead.active { transform: translateY(35px); }
+
+.lower { margin-top: 40px; display: flex; flex-direction: column; gap: 5px; }
+.lower .bead.active { transform: translateY(-40px); }
+
+/* Панель енергії */
+.energy-panel {
+    background: var(--glass-bg);
+    padding: 20px 50px;
+    border-radius: 50px;
+    border: 1px solid var(--neon-orange);
+    text-align: center;
+}
+
+.neuro-value {
+    font-size: 48px;
+    font-weight: bold;
+    color: var(--neon-orange);
+    text-shadow: 0 0 20px var(--neon-orange);
+}
+.daily-mission {
+    margin: 20px auto;
+    max-width: 500px;
+}
+
+.mission-box {
+    background: rgba(0, 212, 255, 0.05);
+    border: 2px dashed var(--neon-blue);
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.target-display {
+    font-size: 40px;
+    color: var(--pearl-white);
+    text-shadow: 0 0 15px var(--neon-blue);
+    margin: 10px 0;
+    font-family: 'Courier New', monospace;
+}
+
+.mission-btn {
+    background: transparent;
+    border: 1px solid var(--neon-blue);
+    color: var(--neon-blue);
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.mission-btn:hover {
+    background: var(--neon-blue);
+    color: var(--ocean-deep);
+}
+
+.status-text {
+    margin-bottom: 10px;
+    font-style: italic;
+    color: #888;
+}
+
+.status-success {
+    color: #2ecc71 !important;
+    text-shadow: 0 0 10px #2ecc71;
+    font-weight: bold;
+}
+
+.pulse {
+    color: #ff3e3e;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink { 50% { opacity: 0; } }

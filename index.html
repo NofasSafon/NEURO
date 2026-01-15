@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEURO BEADS — Експедиція в Океан Нейро</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="neuro-ocean">
+
+    <header>
+        <div class="container">
+            <div class="logo">NEURO <span>BEADS</span></div>
+            <div class="rank">Ранг: <span>Початківець (Біла Перлина)</span></div>
+        </div>
+    </header>
+
+    <main>
+        <section class="mission-control">
+            <h1>Капітане, активуй свій Нейро-Човен!</h1>
+            <p>Перетворюй піщинки цифр на сяючі Перлини Розуму.</p>
+        </section>
+      <section class="daily-mission">
+       <div class="mission-box">
+        <h3><span class="pulse">●</span> Місія: Розблокувати Нейро-Шлях</h3>
+        <p>Встанови потужність енергії на рівень:</p>
+        <div id="target-number" class="target-display">????</div>
+        <div id="mission-status" class="status-text">Очікування активації...</div>
+        <button onclick="generateMission()" class="mission-btn">Отримати нові координати</button>
+       </div>
+      </section>
+        <div class="abacus-system">
+            <div class="abacus-frame">
+                <div id="abacus" class="abacus">
+                    </div>
+            </div>
+            
+            <div class="energy-panel">
+                <div class="result-label">Енергія Інтелекту:</div>
+                <div id="total-value" class="neuro-value">0</div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
