@@ -9,52 +9,45 @@
 body.neuro-ocean {
     background: radial-gradient(circle at center, #112240 0%, #0a192f 100%);
     color: white;
-    font-family: 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Segoe UI', sans-serif;
     margin: 0;
-    min-height: 100vh;
     overflow-x: hidden;
 }
 
-header {
-    background: rgba(10, 25, 47, 0.85);
-    backdrop-filter: blur(10px);
-    border-bottom: 2px solid var(--neon-blue);
-    padding: 15px 0;
-}
-
-.logo {
-    font-size: 28px;
-    font-weight: 800;
-    letter-spacing: 2px;
-}
-
-.logo span { color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
-
-.mission-control {
-    text-align: center;
-    padding: 40px 20px;
-}
-
-/* Рама Абакуса - Нейро-Човен */
-.abacus-system {
+.mobile-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 30px;
+    padding: 10px;
 }
 
+header .header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid var(--neon-blue);
+}
+
+.logo span { color: var(--neon-blue); font-weight: bold; }
+
+/* Адаптивна рама */
 .abacus-frame {
-    background: var(--glass-bg);
-    padding: 30px;
-    border-radius: 20px;
-    border: 3px solid var(--neon-blue);
-    box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
-    position: relative;
+    background: rgba(0,0,0,0.5);
+    padding: 20px 10px;
+    border: 4px solid #5d4037;
+    border-radius: 12px;
+    width: 90vw;
+    max-width: 500px;
+    overflow-x: auto;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 .abacus {
     display: flex;
-    gap: 25px;
+    gap: 15px;
 }
 
 .column {
@@ -62,122 +55,290 @@ header {
     flex-direction: column;
     align-items: center;
     position: relative;
-    width: 50px;
+    width: 40px;
+    height: 280px;
 }
 
-/* Лазерний шлях (спиця) */
+/* Спиця */
 .column::before {
     content: "";
     position: absolute;
     height: 100%;
     width: 4px;
-    background: linear-gradient(to bottom, transparent, var(--neon-blue), transparent);
+    background: #bdc3c7;
     z-index: 0;
 }
 
-/* Роздільна перекладина */
+/* Перекладина */
 .column::after {
     content: "";
     position: absolute;
-    top: 75px;
-    width: 70px;
-    height: 6px;
-    background: var(--neon-blue);
-    box-shadow: 0 0 15px var(--neon-blue);
+    top: 70px;
+    width: 50px;
+    height: 8px;
+    background: #5d4037;
     z-index: 1;
 }
 
-/* Кісточки-Перлини */
 .bead {
-    width: 45px;
+    width: 40px;
     height: 30px;
-    background: radial-gradient(circle at 30% 30%, var(--pearl-white), #b2ebf2);
-    border-radius: 40% 40% 45% 45%;
+    background: radial-gradient(circle at 30% 30%, #444, #111);
+    border-radius: 15px;
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 2;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    border: 1px solid rgba(255,255,255,0.5);
+    transition: transform 0.2s ease;
 }
 
 .bead.active {
     background: radial-gradient(circle at 30% 30%, #fff, var(--neon-orange));
-    box-shadow: 0 0 20px var(--neon-orange);
+    box-shadow: 0 0 15px var(--neon-orange);
 }
 
-/* Позиціонування */
-.upper .bead { transform: translateY(-15px); }
+.upper { height: 70px; display: flex; align-items: flex-start; }
 .upper .bead.active { transform: translateY(35px); }
 
-.lower { margin-top: 40px; display: flex; flex-direction: column; gap: 5px; }
-.lower .bead.active { transform: translateY(-40px); }
+.lower { 
+    height: 200px; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: flex-end; 
+    gap: 2px;
+}
+.lower .bead.active { transform: translateY(-45px); }
 
-/* Панель енергії */
 .energy-panel {
+    margin-top: 20px;
+    padding: 10px 40px;
+    border-radius: 40px;
     background: var(--glass-bg);
-    padding: 20px 50px;
-    border-radius: 50px;
     border: 1px solid var(--neon-orange);
-    text-align: center;
 }
 
-.neuro-value {
-    font-size: 48px;
-    font-weight: bold;
-    color: var(--neon-orange);
-    text-shadow: 0 0 20px var(--neon-orange);
+.neuro-value { 	text-align: center; font-size: 40px; color: var(--neon-orange); font-weight: bold; }
+
+.controls-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 20px;
 }
+
+.mission-btn, .reset-btn {
+    padding: 15px;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.mission-btn { background: var(--neon-blue); color: var(--ocean-deep); }
+.reset-btn { background: #ff3e3e; color: white; }
+
+/* Живий океанічний фон з бульбашками */
+body.neuro-ocean {
+    background: linear-gradient(180deg, #0a192f 0%, #020c1b 100%);
+    position: relative;
+    overflow: hidden; /* Щоб бульбашки не створювали прокрутку */
+}
+
+/* Створення анімованих бульбашок */
+body.neuro-ocean::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 10%),
+        radial-gradient(circle at 80% 20%, rgba(0, 212, 255, 0.05) 0%, transparent 15%);
+    z-index: -1;
+}
+
+/* Енерго-мережа: світіння спиць */
+.column::before {
+    background: linear-gradient(to bottom, transparent, var(--neon-blue), transparent);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+    transition: all 0.5s ease;
+}
+
+/* Сяйво активної колонки */
+.column:has(.bead.active)::before {
+    background: var(--neon-blue);
+    box-shadow: 0 0 20px var(--neon-blue);
+}
+
+/* Анімація активних намистин (ефект дихання) */
+@keyframes energy-pulse {
+    0% { transform: scale(1) translateY(var(--move-y)); box-shadow: 0 0 15px var(--neon-orange); }
+    50% { transform: scale(1.05) translateY(var(--move-y)); box-shadow: 0 0 25px var(--neon-blue); }
+    100% { transform: scale(1) translateY(var(--move-y)); box-shadow: 0 0 15px var(--neon-orange); }
+}
+
+.upper .bead.active { 
+    --move-y: 35px;
+    animation: energy-pulse 3s infinite ease-in-out; 
+}
+
+.lower .bead.active { 
+    --move-y: -45px;
+    animation: energy-pulse 3s infinite ease-in-out; 
+}
+
+/* Ефект сплеску при кліку */
+.bead:active {
+    transform: scale(0.9) !important;
+    filter: brightness(1.5);
+}
+/* Центрування та відступи для всієї панелі */
 .daily-mission {
-    margin: 20px auto;
-    max-width: 500px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
 .mission-box {
-    background: rgba(0, 212, 255, 0.05);
-    border: 2px dashed var(--neon-blue);
+    background: rgba(10, 25, 47, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--neon-blue);
+    border-radius: 20px;
     padding: 20px;
-    border-radius: 15px;
-    text-align: center;
+    text-align: center; /* Центрування тексту */
+    width: 90vw;
+    max-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
 }
 
 .target-display {
-    font-size: 40px;
+    font-size: 1.5rem;
     color: var(--pearl-white);
-    text-shadow: 0 0 15px var(--neon-blue);
-    margin: 10px 0;
-    font-family: 'Courier New', monospace;
+    text-shadow: 0 0 10px var(--neon-blue);
+    margin-bottom: 5px;
+}
+
+.status-text {
+    font-style: italic;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    color: #888;
+}
+
+/* Стилізація кнопок під "прилади" */
+.controls-panel {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.mission-btn, .reset-btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .mission-btn {
-    background: transparent;
-    border: 1px solid var(--neon-blue);
+    background: rgba(0, 212, 255, 0.2);
     color: var(--neon-blue);
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: 0.3s;
+    border-color: var(--neon-blue);
 }
 
 .mission-btn:hover {
     background: var(--neon-blue);
     color: var(--ocean-deep);
+    box-shadow: 0 0 15px var(--neon-blue);
 }
 
-.status-text {
-    margin-bottom: 10px;
-    font-style: italic;
-    color: #888;
-}
-
-.status-success {
-    color: #2ecc71 !important;
-    text-shadow: 0 0 10px #2ecc71;
-    font-weight: bold;
-}
-
-.pulse {
+.reset-btn {
+    background: rgba(255, 62, 62, 0.1);
     color: #ff3e3e;
-    animation: blink 1s infinite;
+    border-color: #ff3e3e;
 }
 
-@keyframes blink { 50% { opacity: 0; } }
+.reset-btn:hover {
+    background: #ff3e3e;
+    color: white;
+    box-shadow: 0 0 15px #ff3e3e;
+}
+/* Контейнер перлини */
+.pearl-container {
+    position: relative;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.hidden { display: none; }
+
+/* Сама перлина */
+.pearl {
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle at 30% 30%, #fff, #e0f7fa 40%, #80deea 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 30px var(--pearl-white), 0 0 60px var(--neon-blue);
+    position: relative;
+    z-index: 10;
+    animation: pearl-float 3s infinite ease-in-out;
+}
+
+/* Ефект спалаху */
+.pearl-flash {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: white;
+    border-radius: 50%;
+    filter: blur(20px);
+    opacity: 0;
+}
+
+.animate-flash {
+    animation: flash-burst 0.8s ease-out;
+}
+
+/* Анімації */
+@keyframes flash-burst {
+    0% { transform: scale(0); opacity: 1; }
+    50% { transform: scale(4); opacity: 0.5; filter: blur(40px); }
+    100% { transform: scale(6); opacity: 0; }
+}
+
+@keyframes pearl-float {
+    0%, 100% { transform: translateY(0) scale(1); filter: brightness(1); }
+    50% { transform: translateY(-10px) scale(1.05); filter: brightness(1.2); }
+}
+.stats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.pearls-count {
+    font-size: 0.8rem;
+    color: var(--neon-blue);
+    margin-top: 4px;
+}
+
+.difficulty-selector {
+    margin-bottom: 15px;
+    color: var(--pearl-white);
+    font-size: 0.9rem;
+}
+
+.difficulty-selector select {
+    background: rgba(0, 212, 255, 0.1);
+    color: var(--neon-blue);
+    border: 1px solid var(--neon-blue);
+    border-radius: 5px;
+    padding: 3px 8px;
+    margin-left: 10px;
+    cursor: pointer;
+    outline: none;
+}

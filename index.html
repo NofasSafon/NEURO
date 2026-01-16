@@ -2,46 +2,64 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEURO BEADS — Експедиція в Океан Нейро</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NEURO BEADS — Мобільна Експедиція</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="neuro-ocean">
-
     <header>
-        <div class="container">
-            <div class="logo">NEURO <span>BEADS</span></div>
-            <div class="rank">Ранг: <span>Початківець (Біла Перлина)</span></div>
+    <div class="header-content">
+        <div class="logo">NEURO <span>BEADS</span></div>
+        <div class="stats">
+            <div class="rank">Ранг: <span id="rank-name">Початківець</span></div>
+            <div class="pearls-count">✨ Перлини: <span id="pearls-total">0</span>/365</div>
         </div>
-    </header>
+    </div>
+   </header>
 
-    <main>
+    
+    <main class="mobile-wrapper">
         <section class="mission-control">
-            <h1>Капітане, активуй свій Нейро-Човен!</h1>
-            <p>Перетворюй піщинки цифр на сяючі Перлини Розуму.</p>
+            <h1>Нейро-Човен</h1>
         </section>
-      <section class="daily-mission">
-       <div class="mission-box">
-        <h3><span class="pulse">●</span> Місія: Розблокувати Нейро-Шлях</h3>
-        <p>Встанови потужність енергії на рівень:</p>
-        <div id="target-number" class="target-display">????</div>
-        <div id="mission-status" class="status-text">Очікування активації...</div>
-        <button onclick="generateMission()" class="mission-btn">Отримати нові координати</button>
-       </div>
-      </section>
+
+        <section class="daily-mission">
+            <div class="mission-box">
+                <div id="victory-pearl" class="pearl-container hidden">
+                    <div class="pearl"></div>
+                    <div class="pearl-flash"></div>
+                </div>
+                <div class="difficulty-selector">
+    <span>Цифр:</span>
+    <select id="digit-select">
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4" selected>4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8 (Mix)</option>
+    </select>
+   </div>
+                <div id="target-number" class="target-display">Ціль: ????</div>
+                <div id="mission-status" class="status-text">Натисніть "Старт"</div>
+                
+                <div class="controls-panel">
+                    <button onclick="generateMission()" class="mission-btn">Старт</button>
+                    <button onclick="resetAbacus()" class="reset-btn">Reset</button>
+                </div>
+            </div>
+        </section>
+
         <div class="abacus-system">
             <div class="abacus-frame">
-                <div id="abacus" class="abacus">
-                    </div>
+                <div id="abacus" class="abacus"></div>
             </div>
-            
             <div class="energy-panel">
-                <div class="result-label">Енергія Інтелекту:</div>
                 <div id="total-value" class="neuro-value">0</div>
             </div>
         </div>
     </main>
-
     <script src="script.js"></script>
 </body>
 </html>
