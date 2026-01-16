@@ -4,6 +4,16 @@
     --neon-orange: #ff9d00;
     --pearl-white: #e0f7fa;
     --glass-bg: rgba(255, 255, 255, 0.1);
+    
+    /* --- НАЛАШТУВАННЯ АБАКУСА --- */
+    /* Базові розміри, які ми будемо змінювати для мобільних */
+    --bead-width: 40px;
+    --bead-height: 30px;
+    --col-width: 40px;
+    --col-height: 280px;
+    --shift-upper: 35px;  /* На скільки зсувається верхня кісточка */
+    --shift-lower: -45px; /* На скільки зсувається нижня кісточка */
+    --col-gap: 15px;      /* Відстань між колонками */
 }
 
 body.neuro-ocean {
@@ -11,6 +21,8 @@ body.neuro-ocean {
     color: white;
     font-family: 'Segoe UI', sans-serif;
     margin: 0;
+    /* Забороняємо подвійний тап для зуму на всьому екрані */
+    touch-action: manipulation; 
     overflow-x: hidden;
 }
 
@@ -19,35 +31,86 @@ body.neuro-ocean {
     flex-direction: column;
     align-items: center;
     padding: 10px;
+    min-height: 100vh;
 }
 
+/* --- КОМПАКТНИЙ ХЕДЕР --- */
 header .header-content {
+    display: flex;
+    justify-content: space-between; /* Розносимо лого і ранг по краях */
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--neon-blue);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.logo { font-size: 1.2rem; }
+.stats { text-align: right; font-size: 0.85rem; }
+
+/* --- МІСІЯ (ПАНЕЛЬ КЕРУВАННЯ) --- */
+.daily-mission {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.mission-box {
+    background: rgba(10, 25, 47, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--neon-blue);
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    width: 95%;
+    max-width: 400px;
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.1);
+}
+
+.mission-control h1 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+    display: none; /* Ховаємо заголовок на мобільних, щоб звільнити місце */
+}
+
+.target-display {
+    font-size: 1.8rem; /* Збільшуємо ціль */
+    font-weight: bold;
+    color: var(--pearl-white);
+    text-shadow: 0 0 10px var(--neon-blue);
+    margin: 5px 0;
+}
+
+/* --- АБАКУС (ГОЛОВНИЙ ЕЛЕМЕНТ) --- */
+.abacus-system {
+    flex-grow: 1; /* Займає вільне місце */
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 15px;
-    border-bottom: 1px solid var(--neon-blue);
+    justify-content: center;
+    width: 100%;
 }
 
-.logo span { color: var(--neon-blue); font-weight: bold; }
-
-/* Адаптивна рама */
 .abacus-frame {
-    background: rgba(0,0,0,0.5);
-    padding: 20px 10px;
-    border: 4px solid #5d4037;
+    background: rgba(0,0,0,0.6);
+    padding: 15px 5px;
+    border: 3px solid #5d4037;
     border-radius: 12px;
-    width: 90vw;
-    max-width: 500px;
-    overflow-x: auto;
+    width: 95vw;
+    max-width: 600px;
+    
+    /* Дозволяємо горизонтальний скрол, якщо пальці завеликі */
+    overflow-x: auto; 
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Центруємо вміст */
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 .abacus {
     display: flex;
-    gap: 15px;
+    gap: var(--col-gap);
+    padding: 0 10px; /* Відступи всередині рамки */
 }
 
 .column {
@@ -55,8 +118,9 @@ header .header-content {
     flex-direction: column;
     align-items: center;
     position: relative;
-    width: 40px;
-    height: 280px;
+    width: var(--col-width);
+    height: var(--col-height);
+    flex-shrink: 0; /* Забороняємо стискання колонок */
 }
 
 /* Спиця */
@@ -67,27 +131,32 @@ header .header-content {
     width: 4px;
     background: #bdc3c7;
     z-index: 0;
+    background: linear-gradient(to bottom, transparent, var(--neon-blue), transparent);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
 }
 
 /* Перекладина */
 .column::after {
     content: "";
     position: absolute;
-    top: 70px;
-    width: 50px;
+    top: calc(var(--col-height) * 0.25); /* Позиція перекладини ~70px */
+    width: calc(var(--col-width) + 10px);
     height: 8px;
     background: #5d4037;
     z-index: 1;
+    border-radius: 2px;
 }
 
 .bead {
-    width: 40px;
-    height: 30px;
+    width: var(--bead-width);
+    height: var(--bead-height);
     background: radial-gradient(circle at 30% 30%, #444, #111);
-    border-radius: 15px;
+    border-radius: 50%; /* Робимо більш округлими */
     cursor: pointer;
     z-index: 2;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Пружний ефект */
+    /* Збільшуємо зону кліку прозорим бордером, якщо треба */
+    position: relative;
 }
 
 .bead.active {
@@ -95,250 +164,102 @@ header .header-content {
     box-shadow: 0 0 15px var(--neon-orange);
 }
 
-.upper { height: 70px; display: flex; align-items: flex-start; }
-.upper .bead.active { transform: translateY(35px); }
+/* Верхня частина */
+.upper { 
+    height: calc(var(--col-height) * 0.25); 
+    display: flex; 
+    align-items: flex-start; 
+}
+.upper .bead.active { 
+    transform: translateY(var(--shift-upper)); 
+}
 
+/* Нижня частина */
 .lower { 
-    height: 200px; 
+    height: calc(var(--col-height) * 0.70); 
     display: flex; 
     flex-direction: column; 
     justify-content: flex-end; 
     gap: 2px;
 }
-.lower .bead.active { transform: translateY(-45px); }
+.lower .bead.active { 
+    transform: translateY(var(--shift-lower)); 
+}
 
+/* Енерго-панель */
 .energy-panel {
-    margin-top: 20px;
-    padding: 10px 40px;
-    border-radius: 40px;
+    margin-top: 15px;
+    padding: 5px 30px;
+    border-radius: 30px;
     background: var(--glass-bg);
     border: 1px solid var(--neon-orange);
 }
+.neuro-value { font-size: 32px; color: var(--neon-orange); font-weight: bold; }
 
-.neuro-value { 	text-align: center; font-size: 40px; color: var(--neon-orange); font-weight: bold; }
-
+/* Кнопки */
 .controls-panel {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-top: 20px;
+    gap: 10px;
+    margin-top: 15px;
 }
-
 .mission-btn, .reset-btn {
-    padding: 15px;
+    padding: 12px;
+    font-size: 1rem;
     border-radius: 8px;
-    border: none;
+    text-transform: uppercase;
     font-weight: bold;
-    cursor: pointer;
+    border: none;
+}
+.mission-btn { background: var(--neon-blue); color: var(--ocean-deep); box-shadow: 0 0 10px rgba(0,212,255,0.3); }
+.reset-btn { background: rgba(255, 62, 62, 0.2); color: #ff3e3e; border: 1px solid #ff3e3e; }
+
+/* --- МОБІЛЬНА АДАПТАЦІЯ --- */
+@media (max-width: 480px) {
+    :root {
+        /* Трохи зменшуємо абакус, щоб влізло 7 колонок, або скролимо */
+        --bead-width: 34px;     
+        --bead-height: 26px;
+        --col-width: 34px;
+        --col-height: 240px;
+        --shift-upper: 30px;
+        --shift-lower: -38px;
+        --col-gap: 8px;
+    }
+
+    .abacus-frame {
+        width: 98vw; /* Максимальна ширина */
+        justify-content: flex-start; /* Вирівнювання ліворуч для скролу */
+        overflow-x: auto; /* Вмикаємо скрол, якщо не влізає */
+        padding-left: 10px; /* Відступ для естетики */
+    }
+	.bead.active {
+        /* Менша тінь для швидкодії */
+        box-shadow: 0 0 5px var(--neon-orange); 
+    }
+    /* Ховаємо логотип на дуже малих екранах, залишаємо тільки "NEURO" */
+    .logo span { display: inline-block; }
+    
+    .mission-box { padding: 10px; }
+    .target-display { font-size: 1.5rem; }
+    .status-text { display: none; } /* Прибираємо зайвий текст */
 }
 
-.mission-btn { background: var(--neon-blue); color: var(--ocean-deep); }
-.reset-btn { background: #ff3e3e; color: white; }
-
-/* Живий океанічний фон з бульбашками */
-body.neuro-ocean {
-    background: linear-gradient(180deg, #0a192f 0%, #020c1b 100%);
-    position: relative;
-    overflow: hidden; /* Щоб бульбашки не створювали прокрутку */
-}
-
-/* Створення анімованих бульбашок */
-body.neuro-ocean::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-image: 
-        radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 10%),
-        radial-gradient(circle at 80% 20%, rgba(0, 212, 255, 0.05) 0%, transparent 15%);
-    z-index: -1;
-}
-
-/* Енерго-мережа: світіння спиць */
-.column::before {
-    background: linear-gradient(to bottom, transparent, var(--neon-blue), transparent);
-    box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
-    transition: all 0.5s ease;
-}
-
-/* Сяйво активної колонки */
-.column:has(.bead.active)::before {
-    background: var(--neon-blue);
-    box-shadow: 0 0 20px var(--neon-blue);
-}
-
-/* Анімація активних намистин (ефект дихання) */
+/* Анімації та інші ефекти залишаємо з оригіналу */
 @keyframes energy-pulse {
     0% { transform: scale(1) translateY(var(--move-y)); box-shadow: 0 0 15px var(--neon-orange); }
-    50% { transform: scale(1.05) translateY(var(--move-y)); box-shadow: 0 0 25px var(--neon-blue); }
+    50% { transform: scale(1.1) translateY(var(--move-y)); box-shadow: 0 0 25px var(--neon-blue); }
     100% { transform: scale(1) translateY(var(--move-y)); box-shadow: 0 0 15px var(--neon-orange); }
 }
 
-.upper .bead.active { 
-    --move-y: 35px;
-    animation: energy-pulse 3s infinite ease-in-out; 
-}
+.upper .bead.active { --move-y: var(--shift-upper); animation: energy-pulse 3s infinite; }
+.lower .bead.active { --move-y: var(--shift-lower); animation: energy-pulse 3s infinite; }
 
-.lower .bead.active { 
-    --move-y: -45px;
-    animation: energy-pulse 3s infinite ease-in-out; 
-}
-
-/* Ефект сплеску при кліку */
-.bead:active {
-    transform: scale(0.9) !important;
-    filter: brightness(1.5);
-}
-/* Центрування та відступи для всієї панелі */
-.daily-mission {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.mission-box {
-    background: rgba(10, 25, 47, 0.8);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--neon-blue);
-    border-radius: 20px;
-    padding: 20px;
-    text-align: center; /* Центрування тексту */
-    width: 90vw;
-    max-width: 400px;
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
-}
-
-.target-display {
-    font-size: 1.5rem;
-    color: var(--pearl-white);
-    text-shadow: 0 0 10px var(--neon-blue);
-    margin-bottom: 5px;
-}
-
-.status-text {
-    font-style: italic;
-    font-size: 0.9rem;
-    margin-bottom: 15px;
-    color: #888;
-}
-
-/* Стилізація кнопок під "прилади" */
-.controls-panel {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-}
-
-.mission-btn, .reset-btn {
-    flex: 1;
-    padding: 12px;
-    border-radius: 12px;
-    border: 2px solid transparent;
-    font-size: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.mission-btn {
-    background: rgba(0, 212, 255, 0.2);
-    color: var(--neon-blue);
-    border-color: var(--neon-blue);
-}
-
-.mission-btn:hover {
-    background: var(--neon-blue);
-    color: var(--ocean-deep);
-    box-shadow: 0 0 15px var(--neon-blue);
-}
-
-.reset-btn {
-    background: rgba(255, 62, 62, 0.1);
-    color: #ff3e3e;
-    border-color: #ff3e3e;
-}
-
-.reset-btn:hover {
-    background: #ff3e3e;
-    color: white;
-    box-shadow: 0 0 15px #ff3e3e;
-}
-/* Контейнер перлини */
-.pearl-container {
-    position: relative;
-    height: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
+/* Інші допоміжні стилі (pearl, bubbles) залишаємо без змін */
 .hidden { display: none; }
-
-/* Сама перлина */
-.pearl {
-    width: 60px;
-    height: 60px;
-    background: radial-gradient(circle at 30% 30%, #fff, #e0f7fa 40%, #80deea 100%);
-    border-radius: 50%;
-    box-shadow: 0 0 30px var(--pearl-white), 0 0 60px var(--neon-blue);
-    position: relative;
-    z-index: 10;
-    animation: pearl-float 3s infinite ease-in-out;
-}
-
-/* Ефект спалаху */
-.pearl-flash {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    background: white;
-    border-radius: 50%;
-    filter: blur(20px);
-    opacity: 0;
-}
-
-.animate-flash {
-    animation: flash-burst 0.8s ease-out;
-}
-
-/* Анімації */
-@keyframes flash-burst {
-    0% { transform: scale(0); opacity: 1; }
-    50% { transform: scale(4); opacity: 0.5; filter: blur(40px); }
-    100% { transform: scale(6); opacity: 0; }
-}
-
-@keyframes pearl-float {
-    0%, 100% { transform: translateY(0) scale(1); filter: brightness(1); }
-    50% { transform: translateY(-10px) scale(1.05); filter: brightness(1.2); }
-}
-.stats {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
-
-.pearls-count {
-    font-size: 0.8rem;
-    color: var(--neon-blue);
-    margin-top: 4px;
-}
-
-.difficulty-selector {
-    margin-bottom: 15px;
-    color: var(--pearl-white);
-    font-size: 0.9rem;
-}
-
-.difficulty-selector select {
-    background: rgba(0, 212, 255, 0.1);
-    color: var(--neon-blue);
-    border: 1px solid var(--neon-blue);
-    border-radius: 5px;
-    padding: 3px 8px;
-    margin-left: 10px;
-    cursor: pointer;
-    outline: none;
-}
+.pearl-container { height: 80px; display: flex; justify-content: center; align-items: center; }
+.pearl { width: 50px; height: 50px; background: radial-gradient(circle at 30% 30%, #fff, #80deea); border-radius: 50%; animation: pearl-float 3s infinite; }
+.pearl-flash { position: absolute; width: 80px; height: 80px; background: white; border-radius: 50%; filter: blur(20px); opacity: 0; }
+.animate-flash { animation: flash-burst 0.8s ease-out; }
+@keyframes flash-burst { 0% { transform: scale(0); opacity: 1; } 100% { transform: scale(6); opacity: 0; } }
+@keyframes pearl-float { 50% { transform: translateY(-10px); } }

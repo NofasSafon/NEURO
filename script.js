@@ -45,10 +45,21 @@ function createBead(parent, value, isUpper, index = 0) {
     bead.className = 'bead';
     bead.dataset.value = value;
     bead.dataset.index = index;
+    
+    // --- ЗМІНИ ТУТ ---
     bead.addEventListener('click', (e) => {
         e.preventDefault();
+        e.stopPropagation(); // Зупиняємо спливання події
         handleBeadInteraction(bead, isUpper);
-    });
+    }, { passive: false }); // Важливо для мобільних браузерів
+    
+    // Додаємо touchstart для миттєвої реакції (швидше ніж click на мобільному)
+    bead.addEventListener('touchstart', (e) => {
+        e.preventDefault(); // Запобігає скролу при дотику до кісточки
+        handleBeadInteraction(bead, isUpper);
+    }, { passive: false });
+    // -----------------
+
     parent.appendChild(bead);
 }
 
