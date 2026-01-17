@@ -14,6 +14,7 @@
             <div class="rank">Ранг: <span id="rank-name">Початківець</span></div>
             <div class="pearls-count">✨ Перлини: <span id="pearls-total">0</span>/365</div>
         </div>
+<button id="sound-btn" class="sound-toggle" aria-label="Перемкнути звук">🔇</button>
     </div>
    </header>
 
@@ -58,6 +59,12 @@
             </div>
         </div>
     </main>
+<audio id="bg-music" loop>
+    <source src="ocean-theme.mp3" type="audio/mpeg">
+</audio>
+<audio id="victory-sound">
+    <source src="magic-chime.mp3" type="audio/mpeg">
+</audio>
     <script src="script.js"></script>
 </body>
 </html>
