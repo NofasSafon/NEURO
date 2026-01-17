@@ -251,6 +251,33 @@ header .header-content {
     50% { transform: scale(1.1) translateY(var(--move-y)); box-shadow: 0 0 25px var(--neon-blue); }
     100% { transform: scale(1) translateY(var(--move-y)); box-shadow: 0 0 15px var(--neon-orange); }
 }
+/* Додайте це в кінець файлу style.css */
+
+.sound-toggle {
+    background: transparent;
+    border: 1px solid var(--neon-blue);
+    color: var(--neon-blue);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: 10px; /* Відступ від статистики */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.sound-toggle:active {
+    transform: scale(0.9);
+}
+
+.sound-toggle.playing {
+    background: rgba(0, 212, 255, 0.2);
+    box-shadow: 0 0 10px var(--neon-blue);
+    border-color: var(--pearl-white);
+}
 
 .upper .bead.active { --move-y: var(--shift-upper); animation: energy-pulse 3s infinite; }
 .lower .bead.active { --move-y: var(--shift-lower); animation: energy-pulse 3s infinite; }
