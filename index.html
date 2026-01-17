@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
@@ -8,37 +8,37 @@
 </head>
 <body class="neuro-ocean">
     <header>
-    <div class="header-content">
-        <div class="logo">NEURO <span>BEADS</span></div>
-        <div class="stats">
-            <div class="rank">Ранг: <span id="rank-name">Початківець</span></div>
-            <div class="pearls-count">✨ Перлини: <span id="pearls-total">0</span>/365</div>
+        <div class="header-content">
+            <div class="logo">NEURO <span>BEADS</span></div>
+            <div class="stats">
+                <div class="rank">Ранг: <span id="rank-name">Початківець</span></div>
+                <div class="pearls-count">✨ Перлини: <span id="pearls-total">0</span>/365</div>
+            </div>
+            <button id="sound-btn" class="sound-toggle" aria-label="Перемкнути звук">🔇</button>
         </div>
-<button id="sound-btn" class="sound-toggle" aria-label="Перемкнути звук">🔇</button>
-    </div>
-   </header>
-
+    </header>
     
     <main class="mobile-wrapper">
-     
         <section class="daily-mission">
             <div class="mission-box">
                 <div id="victory-pearl" class="pearl-container hidden">
                     <div class="pearl"></div>
                     <div class="pearl-flash"></div>
                 </div>
+
                 <div class="difficulty-selector">
-    <span>Цифр:</span>
-    <select id="digit-select">
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4" selected>4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8 (Mix)</option>
-    </select>
-   </div>
+                    <span>Цифр:</span>
+                    <select id="digit-select">
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4" selected>4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8 (Mix)</option>
+                    </select>
+                </div>
+
                 <div id="target-number" class="target-display">Ціль: ????</div>
                 <div id="mission-status" class="status-text">Натисніть "Старт"</div>
                 
@@ -52,19 +52,20 @@
         <div class="abacus-system">
             <div class="abacus-frame">
                 <div id="abacus" class="abacus"></div>
-            
-			</div>
+            </div>
             <div class="energy-panel">
                 <div id="total-value" class="neuro-value">0</div>
             </div>
         </div>
     </main>
-<audio id="bg-music" loop>
-    <source src="ocean-theme.mp3" type="audio/mpeg">
-</audio>
-<audio id="victory-sound">
-    <source src="magic-chime.mp3" type="audio/mpeg">
-</audio>
+
+    <audio id="bg-music" loop>
+        <source src="ocean-theme.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="victory-sound">
+        <source src="magic-chime.mp3" type="audio/mpeg">
+    </audio>
+
     <script src="script.js"></script>
 </body>
 </html>
