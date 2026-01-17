@@ -1,6 +1,6 @@
 const abacus = document.getElementById('abacus');
 
-// --- НОВІ ЗМІННІ ДЛЯ ЗВУКУ ---
+// --- ЗМІННІ ДЛЯ ЗВУКУ ---
 const bgMusic = document.getElementById('bg-music');
 const victorySound = document.getElementById('victory-sound');
 const soundBtn = document.getElementById('sound-btn');
@@ -131,7 +131,7 @@ function calculateTotal() {
 
 function showVictory() {
     const status = document.getElementById('mission-status');
-    // Якщо вже показуємо перемогу - виходимо, щоб не дублювати
+    // Якщо вже показуємо перемогу - виходимо
     if (!pearlContainer.classList.contains('hidden')) return;
 
     status.innerText = "ПЕРЛИНУ ЗНАЙДЕНО!";
@@ -139,7 +139,7 @@ function showVictory() {
     pearlContainer.classList.remove('hidden');
     flash.classList.add('animate-flash');
     
-    // !!! ГРАЄМО ЗВУК ПЕРЕМОГИ !!!
+    // Граємо звук тільки якщо користувач увімкнув його кнопкою
     if (isSoundOn) {
         victorySound.currentTime = 0; 
         victorySound.play().catch(e => console.log(e));
@@ -171,11 +171,8 @@ function resetAbacus() {
 }
 
 function generateMission() {
-    // Якщо звук не увімкнено, спробувати увімкнути при першому кліку
-    if (bgMusic.paused && !isSoundOn) {
-         toggleSound(); 
-    }
-
+    // --- ПРИБРАНО АВТОМАТИЧНИЙ ЗАПУСК АУДІО ТУТ ---
+    
     const select = document.getElementById('digit-select');
     let digits = parseInt(select.value);
     
