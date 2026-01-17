@@ -1,4 +1,4 @@
-﻿const abacus = document.getElementById('abacus');
+const abacus = document.getElementById('abacus');
 
 // --- НОВІ ЗМІННІ ДЛЯ ЗВУКУ ---
 const bgMusic = document.getElementById('bg-music');
@@ -7,7 +7,7 @@ const soundBtn = document.getElementById('sound-btn');
 let isSoundOn = false;
 
 // Налаштування гучності
-bgMusic.volume = 0.3; // 30% гучності для фону, щоб не дратувало
+bgMusic.volume = 0.3; // 30% гучності для фону
 victorySound.volume = 0.8; // Гучніше для перемоги
 
 // --- ФУНКЦІЯ ПЕРЕМИКАННЯ ЗВУКУ ---
@@ -41,6 +41,7 @@ const ranks = [
     { threshold: 150, name: "Адмірал" },
     { threshold: 365, name: "Повелитель Океану" }
 ];
+
 // Елементи перлини
 const pearlContainer = document.getElementById('victory-pearl');
 const flash = document.querySelector('.pearl-flash');
@@ -74,19 +75,18 @@ function createBead(parent, value, isUpper, index = 0) {
     bead.dataset.value = value;
     bead.dataset.index = index;
     
-    // --- ЗМІНИ ТУТ ---
+    // Обробка кліку
     bead.addEventListener('click', (e) => {
         e.preventDefault();
-        e.stopPropagation(); // Зупиняємо спливання події
+        e.stopPropagation(); 
         handleBeadInteraction(bead, isUpper);
-    }, { passive: false }); // Важливо для мобільних браузерів
+    }, { passive: false }); 
     
-    // Додаємо touchstart для миттєвої реакції (швидше ніж click на мобільному)
+    // Обробка дотику
     bead.addEventListener('touchstart', (e) => {
-        e.preventDefault(); // Запобігає скролу при дотику до кісточки
+        e.preventDefault(); 
         handleBeadInteraction(bead, isUpper);
     }, { passive: false });
-    // -----------------
 
     parent.appendChild(bead);
 }
@@ -123,78 +123,67 @@ function calculateTotal() {
     });
     totalDisplay.innerText = total.toLocaleString();
 
-    // Перевірка перемоги та активація перлини
+    // Перевірка перемоги
     if (currentTarget !== 0 && total === currentTarget) {
         showVictory();
     }
 }
 
-function showVictory() {// --- ОНОВЛЕНА ФУНКЦІЯ showVictory ---
+function showVictory() {
     const status = document.getElementById('mission-status');
+    // Якщо вже показуємо перемогу - виходимо, щоб не дублювати
+    if (!pearlContainer.classList.contains('hidden')) return;
+
     status.innerText = "ПЕРЛИНУ ЗНАЙДЕНО!";
     
-    if (pearlContainer.classList.contains('hidden')) {
-        pearlContainer.classList.remove('hidden');
-        flash.classList.add('animate-flash');
-        
-        // !!! ГРАЄМО ЗВУК ПЕРЕМОГИ !!!
-        if (isSoundOn) {
-            victorySound.currentTime = 0; // Перемотати на початок
-            victorySound.play();
-        }
-        
-        updateProgress();
-        
-        setTimeout(() => flash.classList.remove('animate-flash'), 800);
+    pearlContainer.classList.remove('hidden');
+    flash.classList.add('animate-flash');
+    
+    // !!! ГРАЄМО ЗВУК ПЕРЕМОГИ !!!
+    if (isSoundOn) {
+        victorySound.currentTime = 0; 
+        victorySound.play().catch(e => console.log(e));
     }
+    
+    updateProgress();
+    
+    setTimeout(() => flash.classList.remove('animate-flash'), 800);
 }
 
-
 function updateProgress() {
-    // Логіка нарахування: 2,3,4 -> 1; 5,6 -> 2; 7 -> 3
     let reward = 1;
     if (currentDifficulty >= 5 && currentDifficulty <= 6) reward = 2;
     if (currentDifficulty === 7) reward = 3;
     
     totalPearls += reward;
-    
-    // Оновлення тексту на екрані
     document.getElementById('pearls-total').innerText = totalPearls;
     
-    // Оновлення рангу
     const rankNameDisplay = document.getElementById('rank-name');
     const currentRank = [...ranks].reverse().find(r => totalPearls >= r.threshold);
     if (currentRank) {
         rankNameDisplay.innerText = currentRank.name;
     }
 }
+
 function resetAbacus() {
     document.querySelectorAll('.bead').forEach(bead => bead.classList.remove('active'));
     calculateTotal();
 }
 
-
 function generateMission() {
-    // Спробувати увімкнути музику при першому натисканні СТАРТ,
-    // якщо користувач ще не натискав кнопку звуку (зручно для гравця)
+    // Якщо звук не увімкнено, спробувати увімкнути при першому кліку
     if (bgMusic.paused && !isSoundOn) {
-         // Ми не вмикаємо примусово змінну isSoundOn, 
-         // але даємо можливість користувачу це зробити
-         // АБО можна автоматично увімкнути:
          toggleSound(); 
     }
-
-   
 
     const select = document.getElementById('digit-select');
     let digits = parseInt(select.value);
     
-    // Якщо обрано 8, вибираємо випадково від 2 до 7
     if (digits === 8) {
         digits = Math.floor(Math.random() * 6) + 2;
     }
     
-    currentDifficulty = digits; // запам'ятовуємо складність для нарахування очок
+    currentDifficulty = digits;
     
     const min = Math.pow(10, digits - 1);
     const max = Math.pow(10, digits) - 1;
