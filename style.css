@@ -1,4 +1,4 @@
-﻿:root {
+:root {
     --ocean-deep: #0a192f;
     --neon-blue: #00d4ff;
     --neon-orange: #ff9d00;
@@ -6,14 +6,13 @@
     --glass-bg: rgba(255, 255, 255, 0.1);
     
     /* --- НАЛАШТУВАННЯ АБАКУСА --- */
-    /* Базові розміри, які ми будемо змінювати для мобільних */
     --bead-width: 40px;
     --bead-height: 30px;
     --col-width: 40px;
     --col-height: 280px;
-    --shift-upper: 35px;  /* На скільки зсувається верхня кісточка */
-    --shift-lower: -45px; /* На скільки зсувається нижня кісточка */
-    --col-gap: 15px;      /* Відстань між колонками */
+    --shift-upper: 35px;
+    --shift-lower: -45px;
+    --col-gap: 15px;
 }
 
 body.neuro-ocean {
@@ -21,7 +20,6 @@ body.neuro-ocean {
     color: white;
     font-family: 'Segoe UI', sans-serif;
     margin: 0;
-    /* Забороняємо подвійний тап для зуму на всьому екрані */
     touch-action: manipulation; 
     overflow-x: hidden;
 }
@@ -37,7 +35,7 @@ body.neuro-ocean {
 /* --- КОМПАКТНИЙ ХЕДЕР --- */
 header .header-content {
     display: flex;
-    justify-content: space-between; /* Розносимо лого і ранг по краях */
+    justify-content: space-between;
     align-items: center;
     padding: 10px 15px;
     border-bottom: 1px solid var(--neon-blue);
@@ -48,7 +46,35 @@ header .header-content {
 .logo { font-size: 1.2rem; }
 .stats { text-align: right; font-size: 0.85rem; }
 
-/* --- МІСІЯ (ПАНЕЛЬ КЕРУВАННЯ) --- */
+/* Кнопка звуку */
+.sound-toggle {
+    background: transparent;
+    border: 1px solid var(--neon-blue);
+    color: var(--neon-blue);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.sound-toggle:active {
+    transform: scale(0.9);
+}
+
+.sound-toggle.playing {
+    background: rgba(0, 212, 255, 0.2);
+    box-shadow: 0 0 10px var(--neon-blue);
+    border-color: var(--pearl-white);
+}
+
+/* --- МІСІЯ --- */
 .daily-mission {
     width: 100%;
     display: flex;
@@ -71,20 +97,20 @@ header .header-content {
 .mission-control h1 {
     font-size: 1.5rem;
     margin: 10px 0;
-    display: none; /* Ховаємо заголовок на мобільних, щоб звільнити місце */
+    display: none;
 }
 
 .target-display {
-    font-size: 1.8rem; /* Збільшуємо ціль */
+    font-size: 1.8rem;
     font-weight: bold;
     color: var(--pearl-white);
     text-shadow: 0 0 10px var(--neon-blue);
     margin: 5px 0;
 }
 
-/* --- АБАКУС (ГОЛОВНИЙ ЕЛЕМЕНТ) --- */
+/* --- АБАКУС --- */
 .abacus-system {
-    flex-grow: 1; /* Займає вільне місце */
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -99,18 +125,16 @@ header .header-content {
     border-radius: 12px;
     width: 95vw;
     max-width: 600px;
-    
-    /* Дозволяємо горизонтальний скрол, якщо пальці завеликі */
     overflow-x: auto; 
     display: flex;
-    justify-content: center; /* Центруємо вміст */
+    justify-content: center;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 .abacus {
     display: flex;
     gap: var(--col-gap);
-    padding: 0 10px; /* Відступи всередині рамки */
+    padding: 0 10px;
 }
 
 .column {
@@ -120,26 +144,23 @@ header .header-content {
     position: relative;
     width: var(--col-width);
     height: var(--col-height);
-    flex-shrink: 0; /* Забороняємо стискання колонок */
+    flex-shrink: 0;
 }
 
-/* Спиця */
 .column::before {
     content: "";
     position: absolute;
     height: 100%;
     width: 4px;
-    background: #bdc3c7;
-    z-index: 0;
     background: linear-gradient(to bottom, transparent, var(--neon-blue), transparent);
     box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+    z-index: 0;
 }
 
-/* Перекладина */
 .column::after {
     content: "";
     position: absolute;
-    top: calc(var(--col-height) * 0.25); /* Позиція перекладини ~70px */
+    top: calc(var(--col-height) * 0.25);
     width: calc(var(--col-width) + 10px);
     height: 8px;
     background: #5d4037;
@@ -151,12 +172,12 @@ header .header-content {
     width: var(--bead-width);
     height: var(--bead-height);
     background: radial-gradient(circle at 30% 30%, #444, #111);
-    border-radius: 50%; /* Робимо більш округлими */
+    border-radius: 50%;
     cursor: pointer;
     z-index: 2;
-    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Пружний ефект */
-    /* Збільшуємо зону кліку прозорим бордером, якщо треба */
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
+    touch-action: none; /* Заборона скролу на кісточках */
 }
 
 .bead.active {
@@ -164,7 +185,6 @@ header .header-content {
     box-shadow: 0 0 15px var(--neon-orange);
 }
 
-/* Верхня частина */
 .upper { 
     height: calc(var(--col-height) * 0.25); 
     display: flex; 
@@ -174,7 +194,6 @@ header .header-content {
     transform: translateY(var(--shift-upper)); 
 }
 
-/* Нижня частина */
 .lower { 
     height: calc(var(--col-height) * 0.70); 
     display: flex; 
@@ -196,7 +215,7 @@ header .header-content {
 }
 .neuro-value { font-size: 32px; color: var(--neon-orange); font-weight: bold; }
 
-/* Кнопки */
+/* Кнопки керування */
 .controls-panel {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -217,7 +236,6 @@ header .header-content {
 /* --- МОБІЛЬНА АДАПТАЦІЯ --- */
 @media (max-width: 480px) {
     :root {
-        /* Трохи зменшуємо абакус, щоб влізло 7 колонок, або скролимо */
         --bead-width: 34px;     
         --bead-height: 26px;
         --col-width: 34px;
@@ -228,65 +246,38 @@ header .header-content {
     }
 
     .abacus-frame {
-        width: 98vw; /* Максимальна ширина */
-        justify-content: flex-start; /* Вирівнювання ліворуч для скролу */
-        overflow-x: auto; /* Вмикаємо скрол, якщо не влізає */
-        padding-left: 10px; /* Відступ для естетики */
+        width: 98vw;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-left: 10px;
     }
-	.bead.active {
-        /* Менша тінь для швидкодії */
+    
+    .bead.active {
         box-shadow: 0 0 5px var(--neon-orange); 
     }
-    /* Ховаємо логотип на дуже малих екранах, залишаємо тільки "NEURO" */
-    .logo span { display: inline-block; }
     
+    .logo span { display: inline-block; }
     .mission-box { padding: 10px; }
     .target-display { font-size: 1.5rem; }
-    .status-text { display: none; } /* Прибираємо зайвий текст */
+    .status-text { display: none; }
 }
 
-/* Анімації та інші ефекти залишаємо з оригіналу */
+/* Анімації */
 @keyframes energy-pulse {
     0% { transform: scale(1) translateY(var(--move-y)); box-shadow: 0 0 15px var(--neon-orange); }
     50% { transform: scale(1.1) translateY(var(--move-y)); box-shadow: 0 0 25px var(--neon-blue); }
     100% { transform: scale(1) translateY(var(--move-y)); box-shadow: 0 0 15px var(--neon-orange); }
 }
-/* Додайте це в кінець файлу style.css */
-
-.sound-toggle {
-    background: transparent;
-    border: 1px solid var(--neon-blue);
-    color: var(--neon-blue);
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    margin-left: 10px; /* Відступ від статистики */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.sound-toggle:active {
-    transform: scale(0.9);
-}
-
-.sound-toggle.playing {
-    background: rgba(0, 212, 255, 0.2);
-    box-shadow: 0 0 10px var(--neon-blue);
-    border-color: var(--pearl-white);
-}
 
 .upper .bead.active { --move-y: var(--shift-upper); animation: energy-pulse 3s infinite; }
 .lower .bead.active { --move-y: var(--shift-lower); animation: energy-pulse 3s infinite; }
 
-/* Інші допоміжні стилі (pearl, bubbles) залишаємо без змін */
+/* Перлина та Бульбашки */
 .hidden { display: none; }
 .pearl-container { height: 80px; display: flex; justify-content: center; align-items: center; }
 .pearl { width: 50px; height: 50px; background: radial-gradient(circle at 30% 30%, #fff, #80deea); border-radius: 50%; animation: pearl-float 3s infinite; }
 .pearl-flash { position: absolute; width: 80px; height: 80px; background: white; border-radius: 50%; filter: blur(20px); opacity: 0; }
 .animate-flash { animation: flash-burst 0.8s ease-out; }
+
 @keyframes flash-burst { 0% { transform: scale(0); opacity: 1; } 100% { transform: scale(6); opacity: 0; } }
 @keyframes pearl-float { 50% { transform: translateY(-10px); } }
