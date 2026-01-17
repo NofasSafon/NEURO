@@ -129,7 +129,7 @@ function calculateTotal() {
     }
 }
 
-function showVictory() {
+function showVictory() {// --- ОНОВЛЕНА ФУНКЦІЯ showVictory ---
     const status = document.getElementById('mission-status');
     status.innerText = "ПЕРЛИНУ ЗНАЙДЕНО!";
     
@@ -137,11 +137,18 @@ function showVictory() {
         pearlContainer.classList.remove('hidden');
         flash.classList.add('animate-flash');
         
-        updateProgress(); // Додаємо нарахування очок
+        // !!! ГРАЄМО ЗВУК ПЕРЕМОГИ !!!
+        if (isSoundOn) {
+            victorySound.currentTime = 0; // Перемотати на початок
+            victorySound.play();
+        }
+        
+        updateProgress();
         
         setTimeout(() => flash.classList.remove('animate-flash'), 800);
     }
 }
+
 
 function updateProgress() {
     // Логіка нарахування: 2,3,4 -> 1; 5,6 -> 2; 7 -> 3
@@ -166,7 +173,19 @@ function resetAbacus() {
     calculateTotal();
 }
 
+
 function generateMission() {
+    // Спробувати увімкнути музику при першому натисканні СТАРТ,
+    // якщо користувач ще не натискав кнопку звуку (зручно для гравця)
+    if (bgMusic.paused && !isSoundOn) {
+         // Ми не вмикаємо примусово змінну isSoundOn, 
+         // але даємо можливість користувачу це зробити
+         // АБО можна автоматично увімкнути:
+         toggleSound(); 
+    }
+
+   
+
     const select = document.getElementById('digit-select');
     let digits = parseInt(select.value);
     
