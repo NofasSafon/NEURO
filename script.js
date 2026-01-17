@@ -1,4 +1,32 @@
 ﻿const abacus = document.getElementById('abacus');
+
+// --- НОВІ ЗМІННІ ДЛЯ ЗВУКУ ---
+const bgMusic = document.getElementById('bg-music');
+const victorySound = document.getElementById('victory-sound');
+const soundBtn = document.getElementById('sound-btn');
+let isSoundOn = false;
+
+// Налаштування гучності
+bgMusic.volume = 0.3; // 30% гучності для фону, щоб не дратувало
+victorySound.volume = 0.8; // Гучніше для перемоги
+
+// --- ФУНКЦІЯ ПЕРЕМИКАННЯ ЗВУКУ ---
+soundBtn.addEventListener('click', toggleSound);
+
+function toggleSound() {
+    isSoundOn = !isSoundOn;
+    
+    if (isSoundOn) {
+        bgMusic.play().catch(error => console.log("Автоплей заблоковано браузером"));
+        soundBtn.innerText = "🎵"; // Іконка ноти
+        soundBtn.classList.add('playing');
+    } else {
+        bgMusic.pause();
+        soundBtn.innerText = "🔇"; // Іконка вимкненого звуку
+        soundBtn.classList.remove('playing');
+    }
+}
+
 const totalDisplay = document.getElementById('total-value');
 const columnsCount = 7; 
 let currentTarget = 0;
